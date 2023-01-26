@@ -52,7 +52,8 @@
       <hr>
       <h3>Camera controls</h3>
       <a href="#record" class="btn btn-danger btn-lg px-4" onclick="record();">Record</a>
-      <button type=button id="iron_enable" class="btn btn-primary btn-lg px-4">Iron</a>
+      <button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Fusion</a>
+      <button type=button id="icefire_enable" class="btn btn-secondary btn-lg px-4">Ice-Fire</a>
       <button type=button href="#calibrate" class="btn btn-primary btn-lg px-4" onclick="calibrate();" disabled>Calibrate temperature</button>
       <hr>
       <h3>Autonomy flight controls</h3>
@@ -70,9 +71,16 @@
   <script src="resources/bootstrap.bundle.min.js"></script>
   
   <script>
-    $("#iron_enable").click(function(){
+    $("#fusion_enable").click(function(){
       $.post("runcommand.php",
-      {"command": "camerapalette"},
+      {"command": "palette_fusion"},
+      function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+    });
+    $("#icefire_enable").click(function(){
+      $.post("runcommand.php",
+      {"command": "palette_icefire"},
       function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
       });
