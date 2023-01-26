@@ -52,9 +52,10 @@
       </div>
       <hr>
       <h3>Camera controls</h3>
-      <a href="#record" class="btn btn-danger btn-lg px-4" onclick="record();">Record</a>
-      <button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Fusion</a>
-      <button type=button id="icefire_enable" class="btn btn-secondary btn-lg px-4">Ice-Fire</a>
+      <button type=button id="start_record" class="btn btn-danger btn-lg px-4">Record</button>
+      <button type=button id="stop_record" class="btn btn-secondary btn-lg px-4">Stop recording</button>
+      <button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Fusion</button>
+      <button type=button id="icefire_enable" class="btn btn-secondary btn-lg px-4">Ice-Fire</button>
       <button type=button href="#calibrate" class="btn btn-primary btn-lg px-4" onclick="calibrate();" disabled>Calibrate temperature</button>
       <hr>
       <h3>Autonomy flight controls</h3>
@@ -86,6 +87,20 @@
         console.log("Data: " + data + "\nStatus: " + status);
       });
     });
+    $("#start_record").click(function(){
+      $.get("http://dronepi.local:8080/00000/action/eventstart",
+      function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+    });
+    $("#stop_record").click(function(){
+      $.get("http://dronepi.local:8080/00000/action/eventend",
+      function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+    });
+    
+    
   </script>
 </body>
 </html>
