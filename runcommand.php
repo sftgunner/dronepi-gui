@@ -8,9 +8,10 @@ if (isset($_POST['command'])){
         echo $output;
     }
     elseif ($_POST['command'] == "camerapalette"){
+        echo exec("whoami");
+        echo "palette";
         $output = exec("v4l2-ctl -c lep_cid_vid_lut_select=1");
-        echo $output;
-        // echo "palette";
+        echo $output; 
     }
     else{
         print_r($_POST);
