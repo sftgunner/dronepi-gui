@@ -72,7 +72,7 @@
   <script>
     $("#iron_enable").click(function(){
       $.post("runcommand.php",
-      {command: "camerapalette"},
+      {"command": "camerapalette"},
       function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
       });

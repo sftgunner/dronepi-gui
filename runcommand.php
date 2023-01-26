@@ -5,11 +5,17 @@
 if (isset($_POST['command'])){
     if ($_POST['command'] == "test"){
         $output = passthru("python3 python/test.py");
+        echo $output;
     }
     elseif ($_POST['command'] == "camerapalette"){
         $output = passthru("v4l2-ctl -c lep_cid_vid_lut_select=1");
+        echo $output;
+        echo "palette";
     }
-    echo $output;
+    else{
+        print_r($_POST);
+    }
+    // 
 }
 else{
     echo 'No command';
