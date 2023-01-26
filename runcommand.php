@@ -8,9 +8,9 @@ if (isset($_POST['command'])){
         echo $output;
     }
     elseif ($_POST['command'] == "camerapalette"){
-        $output = passthru("v4l2-ctl -c lep_cid_vid_lut_select=1");
+        $output = exec("v4l2-ctl -c lep_cid_vid_lut_select=1");
         echo $output;
-        echo "palette";
+        // echo "palette";
     }
     else{
         print_r($_POST);
@@ -19,6 +19,8 @@ if (isset($_POST['command'])){
 }
 else{
     echo 'No command';
+    $output = exec("ping 1.1.1.1 -t 1");
+    echo $output;
 }
 
 ?>
