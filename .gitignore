@@ -2,3 +2,4 @@
 .DS_Store
 dronepi.log
 downloads/
+__pycache__/
