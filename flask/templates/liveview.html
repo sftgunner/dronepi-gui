@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <title>Warwick Drone</title>
+  
+  
+  
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+  
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  
+  
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='starter-template.css') }}" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="col-lg-8 mx-auto p-3 py-md-5">
+    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <img src="{{ url_for('static', filename='logo_black.png') }}" height="50px">
+        <span class="fs-4">Warwick Drone Management Console</span>
+      </a>
+    </header>
+    
+    <main>
+      <a href="{{url_for('index')}}">&lt; Back to home</a>
+      <h1>DronePi v1.1 Live View</h1>
+      <h3>Camera controls</h3>
+      <!--button type=button id="toggleonline" class="btn btn-secondary btn-lg px-4">Toggle online status (test)</button-->
+      <button type=button id="toggle_record" class="btn btn-danger btn-lg px-4">Record</button>
+      <button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Change colour</button>
+      <button type=button href="#calibrate" class="btn btn-primary btn-lg px-4" onclick="calibrate();" disabled>Calibrate temperature</button>
+      <hr>
+      <div class="embed-responsive embed-responsive-4by3">
+        <img src="{{ url_for('video_feed') }}" style="width:800px;max-width:100%"/>
+      </div>
+      <hr>
+      <hr>
+      <h3>Autonomy flight controls</h3>
+      <button type=button href="#calibrate" class="btn btn-danger btn-lg px-4" disabled>Emergency stop & descend</button>
+      <button type=button href="#calibrate" class="btn btn-primary btn-lg px-4" disabled>Start flight</button>
+      <button type=button href="#calibrate" class="btn btn-secondary btn-lg px-4" disabled>End flight</button>
+    </main>
+    <footer class="pt-5 my-5 text-muted border-top">
+      ES410 Autonomous Drone Design and Control team &middot; &copy; 2022-23
+    </footer>
+  </div>
+  
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+  
+  <script>
+    $("#toggleonline").click(function(){
+      $.get("/api?command=webcamonlinetoggle",
+      function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+    });
+    $("#toggle_record").click(function(){
+      $.get("/api?command=recordingtoggle",
+      function(data, status){
+        data = JSON.parse(data)
+        // console.log("Data: " + data + "\nStatus: " + status);
+        console.log(data)
+        if (data.result == "True"){
+          $("#toggle_record").html("Stop recording")
+        }
+        else if (data.result == "False"){
+          $("#toggle_record").html("Start recording")
+        }
+        else{
+          $("#toggle_record").html("Toggle recording (unknown state)")
+        }
+      });
+    });
+
+
+    $("#fusion_enable").click(function(){
+      $.get("/api?command=palettetoggle",
+      function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+    });
+    // $("#icefire_enable").click(function(){
+    //   $.post("runcommand.php",
+    //   {"command": "palette_icefire"},
+    //   function(data, status){
+    //     console.log("Data: " + data + "\nStatus: " + status);
+    //   });
+    // });
+    // $("#toggle_record").click(function(){
+    //   $.get("http://dronepi.local:8080/00000/action/eventstart",
+    //   function(data, status){
+    //     console.log("Data: " + data + "\nStatus: " + status);
+    //   });
+    // });
+    // $("#stop_record").click(function(){
+    //   $.get("http://dronepi.local:8080/00000/action/eventend",
+    //   function(data, status){
+    //     console.log("Data: " + data + "\nStatus: " + status);
+    //   });
+    // });
+    
+    
+  </script>
+</body>
+</html>

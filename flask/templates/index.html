@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Warwick Drone</title>
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='starter-template.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+  <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <img src="{{ url_for('static', filename='logo_black.png') }}" height="50px">
+      <span class="fs-4">Warwick Drone Management Console</span>
+    </a>
+  </header>
+
+  <main>
+    <h1>DronePi v1.1</h1>
+    <p class="fs-5 col-md-8">Welcome to the Warwick Drone management console. You are connected to the onboard webserver. Click below to access the live preview of the thermal camera, or scroll down for further information.</p>
+
+    <div class="mb-5">
+      <a href="liveview" class="btn btn-primary btn-lg px-4">Live camera view</a>
+      <a href="recordings/" class="btn btn-primary btn-lg px-4">Recordings</a>
+    </div>
+
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+      <div class="col-md-6">
+        <h2>Connecting directly</h2>
+        <p>To make changes to the DronePi autonomy software, you can connect via SSH or VNC by clicking on the links below.</p>
+        <p><i>This assumes you have a compatible SSH/VNC client on this device</i></p>
+        <ul class="icon-list">
+          <li>SSH:<a href="ssh://es410@dronepi.local">es410@dronepi.local</a></li>
+          <li>VNC (native):<a href="vnc://dronepi.local">dronepi.local; Username:es410</a></li>
+          <li>RealVNC (v6.22.826+):<a href="com.realvnc.vncviewer.connect://dronepi.local">dronepi.local; Username:es410</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h2>External team resources</h2>
+        <p>For quick links to other external drone related resources, please see below:</p>
+        <p><i>To access these resources, you may need to disconnect from the ES410 DronePi WiFi network</i></p>
+        <ul class="icon-list">
+          <li><a href="https://github.com/DeadRed6/es410-droneproject">General code repository (GitHub)</a></li>
+          <li><a href="https://warwick626584.monday.com/boards/3363876929/">Project Management (Monday.com)</a></li>
+          <li><a href="https://livewarwickac-my.sharepoint.com/personal/u1906934_live_warwick_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fu1906934%5Flive%5Fwarwick%5Fac%5Fuk%2FDocuments%2FAutonomous%5FDrone%5FDesign%5F%202022%2D23&FolderCTID=0x01200079D46909C39B724AB2CEC87FC63D17D1">File repository (OneDrive/Sharepoint)</a></li>
+          <li><a href="https://github.com/sftgunner/dronepi-gui">Management Console source code (GitHub)</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <footer class="pt-5 my-5 text-muted border-top">
+    ES410 Autonomous Drone Design and Control team &middot; &copy; 2022-23<br>Built using Flask
+  </footer>
+</div>
+
+
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+
+      
+  </body>
+</html>
