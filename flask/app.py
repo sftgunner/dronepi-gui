@@ -92,25 +92,24 @@ def search():
     
     command = args.get("command")
     
-    match command:
-        case "webcamonlinetoggle":
-            webcam.override = not webcam.override
-            response = "Webcam toggled to "+str(webcam.override)
-            result = str(webcam.override)
-            status = 200
-        case "recordingtoggle":
-            webcam.recording = not webcam.recording
-            if webcam.recording:
-                webcam.writer = cv2.VideoWriter(f'flask/recordings/{dt.datetime.now().isoformat()}.mp4',cv2.VideoWriter_fourcc(*'mp4v'), webcam.framerate, (webcam.width,webcam.height))
-            else:
-                webcam.writer.release()
+    if command == "webcamonlinetoggle":
+        webcam.override = not webcam.override
+        response = "Webcam toggled to "+str(webcam.override)
+        result = str(webcam.override)
+        status = 200
+    elif command ==  "recordingtoggle":
+        webcam.recording = not webcam.recording
+        if webcam.recording:
+            webcam.writer = cv2.VideoWriter(f'flask/recordings/{dt.datetime.now().isoformat()}.mp4',cv2.VideoWriter_fourcc(*'mp4v'), webcam.framerate, (webcam.width,webcam.height))
+        else:
+            webcam.writer.release()
             response = "Toggled recording status to "+str(webcam.recording)
             result = str(webcam.recording)
             status = 200
-        case _:
-            response = "Invalid request"
-            result = ""
-            status = 400
+    else:
+        response = "Invalid request"
+        result = ""
+        status = 400
         
     return json.dumps({"status":status,"response":response,"result":result})
 
@@ -180,4 +179,4 @@ def getFiles(reqPath):
                                                  'parentFolder': parentFolderPath})
 
 if __name__ == "__main__":
-    app.run(debug=True,host="0.0.0.0", port=8080)
+    app.run(debug=False,host="0.0.0.0", port=8410) #Needs to be false on debug to open the camera properly
