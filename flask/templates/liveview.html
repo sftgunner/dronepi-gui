@@ -47,7 +47,8 @@
       <h3>Camera controls</h3>
       <!--button type=button id="toggleonline" class="btn btn-secondary btn-lg px-4">Toggle online status (test)</button-->
       <button type=button id="toggle_record" class="btn btn-danger btn-lg px-4">Record</button>
-      <button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Change colour</button>
+      <!--button type=button id="fusion_enable" class="btn btn-primary btn-lg px-4">Change colour</button-->
+      <button type=button id="toggle_maxmin" class="btn btn-primary btn-lg px-4">Show max/min temp</button>
       <button type=button href="#calibrate" class="btn btn-primary btn-lg px-4" onclick="calibrate();" disabled>Calibrate temperature</button>
       <hr>
       <div class="embed-responsive embed-responsive-4by3">
@@ -93,13 +94,23 @@
       });
     });
 
-
-    $("#fusion_enable").click(function(){
-      $.get("/api?command=palettetoggle",
+    $("#toggle_maxmin").click(function(){
+      $.get("/api?command=maxmintoggle",
       function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
       });
     });
+
+
+    // $("#fusion_enable").click(function(){
+    //   $.get("/api?command=palettetoggle",
+    //   function(data, status){
+    //     console.log("Data: " + data + "\nStatus: " + status);
+    //   });
+    // });
+
+
+
     // $("#icefire_enable").click(function(){
     //   $.post("runcommand.php",
     //   {"command": "palette_icefire"},
