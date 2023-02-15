@@ -9,6 +9,9 @@ import numpy as np
 import json
 import time
 
+# Required for raspberry pi camera
+from picamera2 import Picamera2
+
 # Required for radiometry
 
 from leptontools import *
@@ -17,6 +20,13 @@ from folderindex import *
 
 #Initialize the Flask app
 app = Flask(__name__)
+
+# Intialise the visible light camera at server level
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1280, 720)}))
+picam2.start()
+
+
 
 # drone_camera isn't currently used, but has been kept just in case for future reference
 class drone_camera:
@@ -53,6 +63,22 @@ def serve_pil_image(pil_img):
     pil_img.save(img_io, 'JPEG', quality=70)
     img_io.seek(0)
     return send_file(img_io, mimetype='image/jpeg')
+
+
+def gen_raw_frames_visiblelight():  
+    
+    while True:
+        raw_frame = picam2.capture_array()
+        ret, buffer = cv2.imencode('.jpg', raw_frame)
+            
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        # if webcam.recording:
+        #     try:
+        #         webcam.writer.write(raw_frame)
+        #     except:
+        #         print("Webcam unable to write")
 
 def gen_raw_frames():
     ctx = POINTER(uvc_context)()
@@ -93,6 +119,8 @@ def gen_raw_frames():
                         frame = buffer.tobytes()
                         yield (b'--frame\r\n'
                             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+                elif res == -3:
+                    disp("Access denied to camera (err -3). Are you definitely running as root?")
                 else:
                     print("Not sure what error "+str(res)+" means, so exiting")
                     exit(1)
@@ -205,6 +233,10 @@ def search():
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_raw_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed_visiblelight')
+def video_feed_visiblelight():
+    return Response(gen_raw_frames_visiblelight(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.errorhandler(404)
 def page_not_found(e):
